@@ -3,56 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>titulo modificado</title>
-    <style>
-        h1 {
-            color: rgb(33, 8, 56);
-        }
-        body {
-            background-color: rgb(255, 255, 255);
-            color: white;
-            text-align: center;
-        }
-        img {
-            max-width: 300px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Título Modificado</title>
 </head>
 <body>
-    <h1>Nick é a maior lésbica do mundo</h1>
-
-   
-    <img src="Lesbian_Pride_Flag_2019.svg.png" alt="Imagem de Nick">
+    <a href="./cadastro.html">Link Cadastro Estudante</a>
+    <h1>Lista de estudantes!</h1>
     <ul id="minhalista">
-      <li>
-        
-      </li>
+
     </ul>
     <script>
-        async function buscadados(){
-            const resposta = await fetch("http://localhost:8000/estudantes"); // faz uma requisição para nossa API
-            console.log(resposta);
-            if(resposta.status === 200  ){
+        async function buscaDados(){
+            const resposta = await fetch("http://localhost:8000/estudantes")
+            console.log(resposta)
+            if(resposta.status ===200){
                 const dados = await resposta.json()
                 console.log(dados)
                 console.log(dados[0].nome)
-                //criem li a partir do vetor dados
-                //colocar o texto que vem do banco no li
-                //adicionar o li na ul com o id "minhalista"
+                const ul = document.getElementById("minhalista")
+                for (let i = 0; i < dados.length; i++) {
+                    const element = dados[i];
+                    const novoli = document.createElement("li")
+                    novoli.innerText = element.nome
+                    ul.appendChild(novoli)
+                }
+
+                //Criem li a partir do vetor dados
+                //Coloque o texto que vem do banco no li
+                //Adicione o li na ul com id "minhalista" 
             }else{
-                if(resposta.status === 400  ){
+                if(resposta.status ===400){
                     const dados = await resposta.json()
                     alert(dados.mensagem)
-               }
-               else{
-                alert("ERRO NÃO IDENTIFICADO");
-
-               }
+                }
+                else{
+                    alert("ERRO NÃO IDENTIFICADO");
+                }
             }
         }
-        buscadados();
+        buscaDados()
     </script>
 </body>
 </html>
